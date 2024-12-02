@@ -41,6 +41,12 @@ final class WebSocketManager {
       onEvent(data);
     });
   }
+  void registerUser(String userId) {
+     debugPrint("Registering user: $userId"); 
+  socket.emit("register_user", {"userId": userId});
+
+}
+
   //Sending data to any channel
   void webSocketSender(String eventName, dynamic body) {
     socket.emit(eventName, body);

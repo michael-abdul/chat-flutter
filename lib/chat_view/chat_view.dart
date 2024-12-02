@@ -2,7 +2,6 @@ import 'package:chat_flutter/chat_view/chat_view_manager.dart';
 import 'package:chat_flutter/core/websocket_manager.dart';
 import 'package:flutter/material.dart';
 
-
 class ChatView extends StatefulWidget {
   final String name;
   const ChatView({super.key, required this.name});
@@ -56,25 +55,63 @@ class _ChatViewState extends State<ChatView> with ChatViewManager {
         });
   }
 
+  // Widget buildInput() {
+  //   return SafeArea(
+  //     child: Row(
+  //       children: <Widget>[
+  //         Expanded(
+  //           flex: 3,
+  //           child: TextFormField(
+  //             controller: msgController,
+  //           ),
+  //         ),
+  //         Expanded(
+  //           flex: 1,
+  //           child: ElevatedButton(
+  //             onPressed: () => sendMessage(widget.name, () {
+  //               setState(() {});
+  //             }),
+  //             child: const Text("Send"),
+  //           ),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
+  String receiverName = ""; // Receiver name
+
   Widget buildInput() {
     return SafeArea(
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            flex: 3,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
             child: TextFormField(
-              controller: msgController,
+              onChanged: (value) => receiverName = value,
+              decoration: const InputDecoration(
+                labelText: "Enter receiver's name",
+              ),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: ElevatedButton(
-              onPressed: () => sendMessage(widget.name, () {
-                setState(() {});
-              }),
-              child: const Text("Send"),
-            ),
-          )
+          Row(
+            children: <Widget>[
+              Expanded(
+                flex: 3,
+                child: TextFormField(
+                  controller: msgController,
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: ElevatedButton(
+                  onPressed: () => sendMessage(widget.name, receiverName, () {
+                    setState(() {});
+                  }),
+                  child: const Text("Send"),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
